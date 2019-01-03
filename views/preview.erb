@@ -1,0 +1,18 @@
+<html>
+	<head>
+	  <meta charset="utf-8" />
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	</head>
+	<body>
+	      <div style="height: 100px; width: 400px; overflow: hidden; font-size: 1.0em">
+		<div style="width: 100px; text-align: center; overflow: hidden; margin-right: 9px; float: left">
+   	      	   <img src="https://www.ror.community/img/apple-touch-icon.png?v=2" alt="o" style="height: 100px" />
+		</div>
+	      <div style="margin-left: 3px;">
+		<p><span class="control-label">Name:</span> <a href="<%= ror_api %>/organizations/<%= ror_record['id'] %>" target="_blank" style="text-decoration: none;"><%= ror_record['name'] %></a></p>
+		<p><span class="control-label">Location:</span> <%= ror_record['country']['country_name'] %></p>
+		<p><span class="control-label">ROR ID:</span><span style="font-family:monospace;"> <%= ror_record['id'] %></span></p>
+	      </div>
+	     </div>
+	</body>
+</html>
