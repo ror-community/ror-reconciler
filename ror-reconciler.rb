@@ -7,18 +7,18 @@ require 'open-uri'
 set :bind, '0.0.0.0'
 set :protection, :except => :frame_options
 
-ROR_API="http://ror-api.labs.crossref.org"
+ROR_API="https://api.ror.org"
 
 helpers do
   def search_ror test_org_name
     test_org_name = test_org_name.tr(';', '')
-    uri = "http://ror-api.labs.crossref.org/organizations?query=#{URI::encode(test_org_name)}"
+    uri = "#{ROR_API}/organizations?query=#{URI::encode(test_org_name)}"
     res = open(uri).read
     return JSON.parse(res)
   end
 
   def get_ror ror
-    uri = "http://ror-api.labs.crossref.org/organizations/#{URI::encode(ror)}"
+    uri = "#{ROR_API}/organizations/#{URI::encode(ror)}"
     res = open(uri).read
     return JSON.parse(res)
   end
@@ -117,15 +117,15 @@ get '/reconcile/?', :provides => [:html, :json] do
 
     { "id" => "/ror/organization", "name" => "Organization" }
   ]
-  view =  { "url" => "http://ror-recon.labs.crossref.org/reconcile" }
+  view =  { "url" => "#{ROR_API}/reconcile" }
 
   preview = {
     "width" => 400,
     "height" => 100,
-    "url" => "http://ror-recon.labs.crossref.org/preview/{{id}}"
+    "url" => "#{ROR_API}/preview/{{id}}"
   }
 
-  entity = {"flyout_service_path" => "/flyout?id=${id}","service_path" => "/suggest", "service_url" => "http://ror-recon.labs.crossref.org"}
+  entity = {"flyout_service_path" => "/flyout?id=${id}","service_path" => "/suggest", "service_url" => ROR_API}
 
   suggest = {"entity" => entity}
 
