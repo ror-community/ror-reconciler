@@ -20,3 +20,5 @@ You should see something like:
 - `docker service ls`
 - `docker stack rm ror_reconcile`
 - `docker swarm leave --force`
+
+video to come soon
