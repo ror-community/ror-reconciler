@@ -8,6 +8,8 @@ set :bind, '0.0.0.0'
 set :protection, :except => :frame_options
 
 ROR_API="https://api.ror.org"
+ROR_RECON = "http://ror-recon.labs.crossref.org"
+MAX_RESULTS = 5
 
 helpers do
   def search_ror test_org_name
@@ -46,13 +48,13 @@ post '/reconcile/?', :provides => [:html, :json] do
     hits = search_ror(q['query'])
     results[key] = Hash.new
     results[key]['result'] = Array.new
-    score = 0;
+    score = hits['items'].length
     type = { "id" => "/ror/organization", "name" => "Organization" }
-    hits['hits'].each do |hit|
+    hits['items'][0,MAX_RESULTS].each do |hit|
       ror = hit['id']
       entry = { "id" => ror, "name" => hit["name"], "type" => [type], "score" => score, "match" => "false", "uri" => ror }
       results[key]['result'].push(entry)
-      score = score + 1
+      score = score - 1
     end
   end
   results.to_json
@@ -89,12 +91,13 @@ get '/suggest/?', :provides => [:json] do
 
   results = []
   hits = search_ror(prefix)
-  score = 0
-  hits['hits'].each do |hit|
+  score = hits['items'].length
+  
+  hits['items'][0,MAX_RESULTS].each do |hit|
     ror = hit['id']
     entry = { "id" => ror, "name" => hit["name"], "score" => score, "description" => hit['country']['country_name'] }
     results.push(entry)
-    score = score + 1
+    score = score - 1
   end
 
   json = {"result" => results}.to_json
@@ -117,15 +120,15 @@ get '/reconcile/?', :provides => [:html, :json] do
 
     { "id" => "/ror/organization", "name" => "Organization" }
   ]
-  view =  { "url" => "#{ROR_API}/reconcile" }
+  view =  { "url" => "#{ROR_RECON}/reconcile" }
 
   preview = {
     "width" => 400,
     "height" => 100,
-    "url" => "#{ROR_API}/preview/{{id}}"
+    "url" => "#{ROR_RECON}/preview/{{id}}"
   }
 
-  entity = {"flyout_service_path" => "/flyout?id=${id}","service_path" => "/suggest", "service_url" => ROR_API}
+  entity = {"flyout_service_path" => "/flyout?id=${id}","service_path" => "/suggest", "service_url" => ROR_RECON}
 
   suggest = {"entity" => entity}
 
