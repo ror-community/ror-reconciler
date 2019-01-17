@@ -1,18 +1,13 @@
 version: "3"
+
 services:
   web:
-    image: ror-reconciler:latest
-    deploy:
-      replicas: 2
-      resources:
-        limits:
-          cpus: "0.1"
-          memory: 50M
-      restart_policy:
-        condition: on-failure
+    env_file: .env
+    build: .
+    image: rorcommunity/ror-reconciler
     ports:
-      - "3100:3100"
-    networks:
-      - rornet
-networks:
-  rornet:
+      - "9292:80"
+      - "2222:22"
+    volumes:
+      - ./spec:/home/app/webapp/spec
+      - ./app.rb:/home/app/webapp/app.rb

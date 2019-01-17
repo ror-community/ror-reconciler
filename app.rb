@@ -1,6 +1,5 @@
 require 'bundler/setup'
 require 'sinatra'
-# require 'sinatra/cross_origin'
 require 'json'
 require 'open-uri'
 
