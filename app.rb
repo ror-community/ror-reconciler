@@ -149,3 +149,7 @@ get '/reconcile/?', :provides => [:html, :json] do
 
   response
 end
+
+get '/', :provides => [:html] do
+  redirect "https://www.ror.org", 'Roar!'
+end
