@@ -7,7 +7,7 @@ set :bind, '0.0.0.0'
 set :protection, :except => :frame_options
 
 ROR_API="https://api.ror.org"
-ROR_RECON = "http://ror-recon.labs.crossref.org"
+ROR_RECON = "http://reconcile.crossref.org"
 MAX_RESULTS = 5
 
 helpers do
@@ -148,4 +148,8 @@ get '/reconcile/?', :provides => [:html, :json] do
   end
 
   response
+end
+
+get '/', :provides => [:html] do
+  redirect "https://www.ror.org", 'Roar!'
 end
