@@ -7,7 +7,7 @@ set :bind, '0.0.0.0'
 set :protection, :except => :frame_options
 
 ROR_API="https://api.ror.org"
-ROR_RECON = "http://ror-recon.labs.crossref.org"
+ROR_RECON = "http://reconcile.crossref.org"
 MAX_RESULTS = 5
 
 helpers do
