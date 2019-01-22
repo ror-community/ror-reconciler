@@ -8,7 +8,7 @@ set :protection, except: :frame_options
 
 ROR_API = 'https://api.ror.org'.freeze
 ROR_RECON = 'http://reconcile.ror.org'.freeze
-MAX_RESULTS = 10
+MAX_RESULTS = 5
 
 helpers do
   def search_ror(test_org_name)
