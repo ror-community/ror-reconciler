@@ -1,6 +1,18 @@
 ## A simple OpenRefine reconciler for the Research Organization Registry (ROR).
 
-## Cheatsheet to get this working with Docker on your local machine
+This repository is for the code behind ROR's OpenRefine reconciler end-point.
+
+Of course you don't need to actually build/install this to use the reconciler. Instead you can simply add the following URL to your list of OpenRefine reconcilers:
+
+`https://reconcile.ror.org/reconcile`
+
+And use the following “Refine Expression Language” command for creating a new column of ROR ids:
+
+`cell.recon.match.id`
+
+But if you really want to install and work with the reconciler locally, you can follow the cheatsheet below to run the reconciler in Docker.
+
+## Cheatsheet to get reconciler server working with Docker on your local machine
 
 - `docker build -t ror-reconciler .`
 - `docker swarm init`
@@ -20,5 +32,3 @@ You should see something like:
 - `docker service ls`
 - `docker stack rm ror_reconcile`
 - `docker swarm leave --force`
-
-video to come soon
