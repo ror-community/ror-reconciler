@@ -13,5 +13,6 @@ gem 'codeclimate-test-reporter', '~> 1.0', '>= 1.0.8'
 gem "better_errors"
 gem "binding_of_caller"
 gem 'bugsnag', '~> 6.10'
+gem 'rack-cors'
 #gem 'rubocop', '~> 0.49.1', require: false
 
