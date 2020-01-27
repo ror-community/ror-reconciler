@@ -21,7 +21,7 @@ But if you really want to install and work with the reconciler locally, you can 
 
 ## test
 
-`curl http://localhost:4567/heartbeat`
+`curl http://localhost:9292/heartbeat`
 
 You should see something like:
 

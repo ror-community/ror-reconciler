@@ -4,8 +4,7 @@ require 'json'
 require 'open-uri'
 
 set :bind, '0.0.0.0'
-set :protection, except: :frame_options
-
+set :protection, :except=>[:frame_options,:path_traversal]
 ROR_API = 'https://api.ror.org'.freeze
 ROR_RECON = 'https://reconcile.ror.org'.freeze
 MAX_RESULTS = 5

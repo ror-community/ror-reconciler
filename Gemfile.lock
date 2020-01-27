@@ -34,7 +34,7 @@ GEM
     json (2.1.0)
     minitest (5.11.3)
     public_suffix (3.0.3)
-    rack (1.6.11)
+    rack (1.6.12)
     rack-protection (1.5.5)
       rack
     rack-test (1.1.0)
@@ -83,7 +83,7 @@ DEPENDENCIES
   codeclimate-test-reporter (~> 1.0, >= 1.0.8)
   factory_bot
   json
-  rack
+  rack (>= 1.6.12)
   rack-test
   rspec
   simplecov
