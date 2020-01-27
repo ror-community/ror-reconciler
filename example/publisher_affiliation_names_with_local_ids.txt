@@ -1,0 +1,16 @@
+publisher_id	name
+1000001	University of Oxford
+1000002	Oxford University
+1000003	Welcome Trust
+1000004	US Department of Transportation
+1000005	National Aeronautics and Space Administration
+1000006	National Institutes of Health
+1000007	U.S. Department of Transportation
+1000008	US Department of Transport
+1000009	NASA
+1000010	Wellcome Trust
+1000011	Sloan Foundation
+1000012	National Institute of Health
+1000013	All Souls College, University of Oxford
+1000014	Oxfnord University
+1000015	The Foundation for Psychoceramics
