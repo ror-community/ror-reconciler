@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 gem "sinatra"
 gem "json"
-gem "rack"
+gem "rack", ">= 1.6.12"
 gem "rspec"
 gem "simplecov"
 gem "sinatra-cross_origin"
