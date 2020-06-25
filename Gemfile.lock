@@ -81,13 +81,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport (>= 5.2.4.3)
   better_errors
   binding_of_caller
   bugsnag (~> 6.10)
   codeclimate-test-reporter (~> 1.0, >= 1.0.8)
   factory_bot
   json
-  rack
+  rack (>= 2.1.4)
   rack-test
   rspec
   simplecov

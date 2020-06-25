@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 gem "sinatra"
 gem "json"
-gem "rack"
+gem "rack", ">= 2.1.4"
 gem "rspec"
 gem "simplecov"
 gem "sinatra-cross_origin"
@@ -14,4 +14,4 @@ gem "better_errors"
 gem "binding_of_caller"
 gem 'bugsnag', '~> 6.10'
 #gem 'rubocop', '~> 0.49.1', require: false
-
+gem "activesupport", ">= 5.2.4.3"
