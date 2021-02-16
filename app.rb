@@ -6,20 +6,21 @@ require 'open-uri'
 set :bind, '0.0.0.0'
 set :protection, except: :frame_options
 
-ROR_API = 'https://api.ror.org'.freeze
-ROR_RECON = 'http://reconcile.ror.org'.freeze
+# required ENV variables, can be set in .env file
+ENV['ROR_API'] ||= 'https://api.ror.org'.freeze
+ENV['ROR_RECON'] ||= 'https://reconcile.ror.org'.freeze
 MAX_RESULTS = 5
 
 helpers do
   def search_ror(test_org_name)
     test_org_name = test_org_name.tr(';', '')
-    uri = "#{ROR_API}/organizations?query=#{URI.encode(test_org_name)}"
+    uri = "#{ENV['ROR_API']}/organizations?query=#{URI.encode(test_org_name)}"
     res = open(uri).read
     JSON.parse(res)
   end
 
   def get_ror(ror)
-    uri = "#{ROR_API}/organizations/#{URI.encode(ror)}"
+    uri = "#{ENV['ROR_API']}/organizations/#{URI.encode(ror)}"
     res = open(uri).read
     JSON.parse(res)
   end
@@ -34,7 +35,7 @@ get '/preview/*.*', provides: [:html] do
   ror = params['splat'].join('.')
   ror_record = get_ror(ror)
 
-  erb :preview, locals: { ror_api: ROR_API, ror_record: ror_record }
+  erb :preview, locals: { ror_api: ENV['ROR_API'], ror_record: ror_record }
 end
 
 post '/reconcile/?', provides: %i[html json] do
@@ -68,7 +69,7 @@ get '/flyout/?', provides: [:json] do
   template = ERB.new(html)
   b = binding
   b.local_variable_set(:ror_record, ror_record)
-  b.local_variable_set(:ror_api, ROR_API)
+  b.local_variable_set(:ror_api, ENV['ROR_API'])
   # template = ERB.new(html).result(b)
   # template.result
   json = { 'id' => ror, 'html' => template.result(b) }.to_json
@@ -119,15 +120,15 @@ get '/reconcile/?', provides: %i[html json] do
 
     { 'id' => '/ror/organization', 'name' => 'Organization' }
   ]
-  view =  { 'url' => "#{ROR_RECON}/reconcile" }
+  view =  { 'url' => "#{ENV['ROR_RECON']}/reconcile" }
 
   preview = {
     'width' => 400,
     'height' => 100,
-    'url' => "#{ROR_RECON}/preview/{{id}}"
+    'url' => "#{ENV['ROR_RECON']}/preview/{{id}}"
   }
 
-  entity = { 'flyout_service_path' => '/flyout?id=${id}', 'service_path' => '/suggest', 'service_url' => ROR_RECON }
+  entity = { 'flyout_service_path' => '/flyout?id=${id}', 'service_path' => '/suggest', 'service_url' => ENV['ROR_RECON'] }
 
   suggest = { 'entity' => entity }
 
