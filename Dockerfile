@@ -45,7 +45,6 @@ WORKDIR /home/app/webapp
 RUN mkdir -p vendor/bundle && \
     chown -R app:app . && \
     chmod -R 755 . && \
-    gem update --system && \
     gem install bundler:2.1.4 && \
     /sbin/setuser app bundle install --path vendor/bundle
 
