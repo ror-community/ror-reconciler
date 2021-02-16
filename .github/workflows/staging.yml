@@ -110,7 +110,7 @@ jobs:
         with:
           channel: '#deployment-updates'
           color: 'good'
-          text: 'A new version of the <https://reconcile.dev.ror.org|Reconciler> is deployed to dev.'
+          text: 'A new version of the <https://reconcile.staging.ror.org|Reconciler> is deployed to staging.'
           failure_text: '${env.GITHUB_WORKFLOW} (${env.GITHUB_RUN_NUMBER}) build failed'
           fields: |
             [{ "title": "Commit message", "value": "${{ github.event.head_commit.message }}" },
