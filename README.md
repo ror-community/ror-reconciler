@@ -6,11 +6,11 @@ Of course you don't need to actually build/install this to use the reconciler. I
 
 `https://reconcile.ror.org/reconcile`
 
-Video tutorial: [How to clean up affiliation data with the ROR reconciler](https://www.youtube.com/watch?v=woJiFHBmRCE)
-
 And use the following “Refine Expression Language” command for creating a new column of ROR ids:
 
 `cell.recon.match.id`
+
+**Video tutorial:** [How to clean up affiliation data with the ROR reconciler](https://www.youtube.com/watch?v=woJiFHBmRCE)
 
 But if you really want to install and work with the reconciler locally, you can follow the cheatsheet below to run the reconciler in Docker.
 
