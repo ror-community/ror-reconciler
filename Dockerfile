@@ -1,4 +1,4 @@
-FROM phusion/passenger-full:1.0.9
+FROM phusion/passenger-full:1.0.12
 LABEL maintainer="mfenner@datacite.org"
 
 # Set correct environment variables
@@ -11,6 +11,7 @@ RUN usermod -a -G docker_env app
 CMD ["/sbin/my_init"]
 
 # Install Ruby 2.6.5
+#RUN bash -lc 'rvm install ruby-2.6.5'
 RUN bash -lc 'rvm --default use ruby-2.6.5'
 
 # Update installed APT packages, clean up when done
