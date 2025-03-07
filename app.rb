@@ -9,6 +9,7 @@ set :protection, except: :frame_options
 # required ENV variables, can be set in .env file
 ENV['ROR_API'] ||= 'https://api.ror.org'.freeze
 ENV['ROR_RECON'] ||= 'https://reconcile.ror.org'.freeze
+
 MAX_RESULTS = 5
 
 helpers do
