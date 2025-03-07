@@ -1,8 +1,8 @@
-name: Deploy Dev
+name: Deploy Staging
 on:
   push:
     branches:
-      - "dev"
+      - "staging"
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -54,7 +54,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: rorcommunity/ror-reconciler:dev
+          tags: rorcommunity/ror-reconciler:staging
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
@@ -91,11 +91,11 @@ jobs:
           wget https://github.com/jwilder/dockerize/releases/download/v0.6.0/dockerize-linux-amd64-v0.6.0.tar.gz
           tar -xzvf dockerize-linux-amd64-v0.6.0.tar.gz
           rm dockerize-linux-amd64-v0.6.0.tar.gz
-          ./dockerize -template ror/services/reconcile/_ror-reconcile-dev.auto.tfvars.tmpl:ror/services/reconcile/_ror-reconcile-dev.auto.tfvars
+          ./dockerize -template ror/services/reconcile/_ror-reconcile-staging.auto.tfvars.tmpl:ror/services/reconcile/_ror-reconcile-staging.auto.tfvars
 
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add ror/services/reconcile/_ror-reconcile-dev.auto.tfvars
+          git add ror/services/reconcile/_ror-reconcile-staging.auto.tfvars
           git commit -m "Adding ror-reconciler git variables for commit ${{ steps.extract_variables.outputs.GIT_SHA }}"
       - name: Push changes
         uses: ad-m/github-push-action@v0.6.0
@@ -110,5 +110,5 @@ jobs:
         with:
           channel: '#deployment-updates'
           color: 'good'
-          text: 'A new version of the <https://reconcile.dev.ror.org|Reconciler> is deployed to dev.'
-          failure_text: '${env.GITHUB_WORKFLOW} (${env.GITHUB_RUN_NUMBER}) build failed'
+          text: 'A new version of the <https://reconcile.staging.ror.org|Reconciler> is deployed to staging.'
+          failure_text: '${env.GITHUB_WORKFLOW} (${env.GITHUB_RUN_NUMBER}) build and deploy to staging failed'
