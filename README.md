@@ -10,6 +10,8 @@ And use the following “Refine Expression Language” command for creating a ne
 
 `cell.recon.match.id`
 
+**Video tutorial:** [How to clean up affiliation data with the ROR reconciler](https://www.youtube.com/watch?v=woJiFHBmRCE)
+
 But if you really want to install and work with the reconciler locally, you can follow the cheatsheet below to run the reconciler in Docker.
 
 ## Cheatsheet to get reconciler server working with Docker on your local machine
