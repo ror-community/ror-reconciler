@@ -14,6 +14,9 @@ MAX_RESULTS = 5
 helpers do
   def search_ror(test_org_name)
     test_org_name = test_org_name.tr(';', '')
+    test_org_name = test_org_name.tr('&', '%26')
+    test_org_name = test_org_name.tr('/', '%2F')
+    test_org_name = test_org_name.tr('?', '%3F')
     uri = "#{ENV['ROR_API']}/organizations?query=#{URI.encode(test_org_name)}"
     res = open(uri).read
     JSON.parse(res)
@@ -48,13 +51,15 @@ post '/reconcile/?', provides: %i[html json] do
     hits = search_ror(q['query'])
     results[key] = {}
     results[key]['result'] = []
-    score = hits['items'].length
-    type = { 'id' => '/ror/organization', 'name' => 'Organization' }
-    hits['items'][0, MAX_RESULTS].each do |hit|
-      ror = hit['id']
-      entry = { 'id' => ror, 'name' => hit['name'], 'type' => [type], 'score' => score, 'match' => 'false', 'uri' => ror }
-      results[key]['result'].push(entry)
-      score -= 1
+    if hits['items']
+      score = hits['items'].length
+      type = { 'id' => '/ror/organization', 'name' => 'Organization' }
+        hits['items'][0, MAX_RESULTS].each do |hit|
+        ror = hit['id']
+        entry = { 'id' => ror, 'name' => hit['name'], 'type' => [type], 'score' => score, 'match' => 'false', 'uri' => ror }
+        results[key]['result'].push(entry)
+        score -= 1
+      end
     end
   end
   results.to_json
