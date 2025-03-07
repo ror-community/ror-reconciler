@@ -54,7 +54,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: rorcommunity/ror-reconciler:latest
+          tags: rorcommunity/ror-reconciler:prod
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
