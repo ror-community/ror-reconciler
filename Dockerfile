@@ -1,5 +1,5 @@
-FROM phusion/passenger-full:0.9.30
-MAINTAINER Martin Fenner "mfenner@datacite.org"
+FROM phusion/passenger-full:1.0.12
+LABEL maintainer="mfenner@datacite.org"
 
 # Set correct environment variables
 ENV HOME /home/app
@@ -10,8 +10,9 @@ RUN usermod -a -G docker_env app
 # Use baseimage-docker's init process
 CMD ["/sbin/my_init"]
 
-# Install Ruby 2.4.4
-RUN bash -lc 'rvm --default use ruby-2.4.4'
+# Install Ruby 2.6.5
+RUN bash -lc 'rvm install ruby-2.6.5'
+RUN bash -lc 'rvm --default use ruby-2.6.5'
 
 # Update installed APT packages, clean up when done
 RUN apt-get update && \
@@ -26,6 +27,7 @@ RUN rm -f /etc/service/nginx/down && \
     rm /etc/nginx/sites-enabled/default
 COPY vendor/docker/webapp.conf /etc/nginx/sites-enabled/webapp.conf
 COPY vendor/docker/00_app_env.conf /etc/nginx/conf.d/00_app_env.conf
+COPY vendor/docker/env.conf /etc/nginx/main.d/env.conf
 
 # Use Amazon NTP servers
 COPY vendor/docker/ntp.conf /etc/ntp.conf
@@ -42,8 +44,10 @@ RUN rm -f /etc/service/sshd/down && \
 
 # Install Ruby gems
 WORKDIR /home/app/webapp
-RUN gem update --system && \
-    gem install bundler && \
+RUN mkdir -p vendor/bundle && \
+    chown -R app:app . && \
+    chmod -R 755 . && \
+    gem install bundler:2.1.4 && \
     /sbin/setuser app bundle install --path vendor/bundle
 
 # install custom ssh key during startup
