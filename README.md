@@ -16,14 +16,13 @@ But if you really want to install and work with the reconciler locally, you can 
 
 ## Cheatsheet to get reconciler server working with Docker on your local machine
 
-- `docker build -t ror-reconciler .`
-- `docker swarm init`
-- `docker stack deploy -c docker-compose.yml ror_reconcile`
+- Start Docker desktop
+- `docker-compose up --build`
 - roar! 🦁
 
 ## test
 
-`curl http://localhost:4567/heartbeat`
+`curl http://localhost:9292/heartbeat`
 
 You should see something like:
 
