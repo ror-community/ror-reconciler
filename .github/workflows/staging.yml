@@ -66,7 +66,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Extract variables
         shell: bash
         run: |
@@ -92,7 +91,6 @@ jobs:
           tar -xzvf dockerize-linux-amd64-v0.6.0.tar.gz
           rm dockerize-linux-amd64-v0.6.0.tar.gz
           ./dockerize -template ror/services/reconcile/_ror-reconcile-staging.auto.tfvars.tmpl:ror/services/reconcile/_ror-reconcile-staging.auto.tfvars
-
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add ror/services/reconcile/_ror-reconcile-staging.auto.tfvars
