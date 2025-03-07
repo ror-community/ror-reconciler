@@ -1,4 +1,4 @@
-FROM phusion/passenger-full:0.9.30
+FROM phusion/passenger-full:1.0.12
 MAINTAINER Martin Fenner "mfenner@datacite.org"
 
 # Set correct environment variables
@@ -11,6 +11,7 @@ RUN usermod -a -G docker_env app
 CMD ["/sbin/my_init"]
 
 # Install Ruby 2.4.4
+RUN bash -lc 'rvm install ruby-2.4.4'
 RUN bash -lc 'rvm --default use ruby-2.4.4'
 
 # Update installed APT packages, clean up when done
@@ -42,8 +43,8 @@ RUN rm -f /etc/service/sshd/down && \
 
 # Install Ruby gems
 WORKDIR /home/app/webapp
-RUN gem update --system && \
-    gem install bundler && \
+#RUN gem update --system && \
+RUN gem install bundler -v 2.3.27 && \
     /sbin/setuser app bundle install --path vendor/bundle
 
 # install custom ssh key during startup
