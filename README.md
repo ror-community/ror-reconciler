@@ -1,35 +1,26 @@
-## A simple OpenRefine reconciler for the Research Organization Registry (ROR).
+# Research Organization Registry (ROR) OpenRefine reconciler
 
-This repository is for the code behind ROR's OpenRefine reconciler end-point.
+This app allows matching data in OpenRefine to ROR according to the [W3C Reconcilation API specification](https://www.w3.org/community/reports/reconciliation/CG-FINAL-specs-0.1-20230321/).
 
-Of course you don't need to actually build/install this to use the reconciler. Instead you can simply add the following URL to your list of OpenRefine reconcilers:
+It is essentially a proxy to the ROR API and provides an endpoint that can be used within OpenRefine according to the [OpenRefine Reconciliation docs](https://openrefine.org/docs/manual/reconciling).
 
-`https://reconcile.ror.org/reconcile`
+For end user information and usage instructions see [ROR documentation: OpenRefine Reconciler](https://ror.readme.io/docs/openrefine-reconciler#usage-instructions)
 
-And use the following “Refine Expression Language” command for creating a new column of ROR ids:
+## Local dev setup
 
-`cell.recon.match.id`
+### Pre-requisits
+- Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- Install [OpenRefine](https://openrefine.org/)
+- Clone this project locally
 
-**Video tutorial:** [How to clean up affiliation data with the ROR reconciler](https://www.youtube.com/watch?v=woJiFHBmRCE)
+### Start ROR reconciler locally
 
-But if you really want to install and work with the reconciler locally, you can follow the cheatsheet below to run the reconciler in Docker.
+1. Start Docker desktop
+2. Change to the project directory and run `docker-compose up --build`
+3. Check that the reconciler app is running
 
-## Cheatsheet to get reconciler server working with Docker on your local machine
+        curl http://localhost:9292/heartbeat
+        {"max_results":5,"named":"ROR Reconciler","status":"OK","pid":"","ruby_version":"2.6.5","phusion":true}
 
-- Start Docker desktop
-- `docker-compose up --build`
-- roar! 🦁
+4. [Configure OpenRefine to use the ROR reconciler per docs](https://ror.readme.io/docs/openrefine-reconciler#usage-instructions), but enter http://localhost:9292/reconcile as the service URL.
 
-## test
-
-`curl http://localhost:9292/heartbeat`
-
-You should see something like:
-
-`{"named":"ROR Reconciler","status":"OK","pid":"1","ruby_version":"2.5.3","phusion":false}`
-
-## To stop
-
-- `docker service ls`
-- `docker stack rm ror_reconcile`
-- `docker swarm leave --force`
