@@ -1,17 +1,27 @@
-source "http://rubygems.org"
-gem "sinatra"
-gem "json"
-gem "rack", ">= 2.1.4"
-gem "rspec"
-gem "simplecov"
-gem "sinatra-cross_origin"
-gem 'rack-test'
-gem 'factory_bot'
-gem 'webmock', '~> 3.1'
-gem 'vcr', '~> 3.0.3'
-gem 'codeclimate-test-reporter', '~> 1.0', '>= 1.0.8'
-gem "better_errors"
-gem "binding_of_caller"
-gem 'bugsnag', '~> 6.10'
-#gem 'rubocop', '~> 0.49.1', require: false
-gem "activesupport", ">= 5.2.4.3"
+source "https://rubygems.org"
+
+ruby "3.2.6"
+
+# Web framework
+gem "sinatra", "~> 4.0"
+gem "sinatra-cross_origin", "~> 0.4"
+gem "rack", "~> 3.0"
+
+# Utilities
+gem "json", "~> 2.7"
+gem "activesupport", "~> 7.1"
+
+# Error tracking
+gem "bugsnag", "~> 6.27"
+
+# Development
+gem "better_errors", "~> 2.10"
+gem "binding_of_caller", "~> 1.0"
+
+# Testing
+gem "rspec", "~> 3.13"
+gem "rack-test", "~> 2.1"
+gem "factory_bot", "~> 6.4"
+gem "webmock", "~> 3.23"
+gem "vcr", "~> 6.3"
+gem "simplecov", "~> 0.22"

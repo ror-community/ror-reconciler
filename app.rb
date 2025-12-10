@@ -18,14 +18,14 @@ helpers do
     test_org_name = test_org_name.tr('&', '%26')
     test_org_name = test_org_name.tr('/', '%2F')
     test_org_name = test_org_name.tr('?', '%3F')
-    uri = "#{ENV['ROR_API']}/organizations?query=#{URI.encode(test_org_name)}"
-    res = open(uri).read
+    uri = "#{ENV['ROR_API']}/organizations?query=#{URI.encode_www_form_component(test_org_name)}"
+    res = URI.open(uri).read
     JSON.parse(res)
   end
 
   def get_ror(ror)
-    uri = "#{ENV['ROR_API']}/organizations/#{URI.encode(ror)}"
-    res = open(uri).read
+    uri = "#{ENV['ROR_API']}/organizations/#{URI.encode_www_form_component(ror)}"
+    res = URI.open(uri).read
     JSON.parse(res)
   end
 end
