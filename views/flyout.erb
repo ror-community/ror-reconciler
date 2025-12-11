@@ -6,8 +6,8 @@
 	<body>
 	      <div style="height: 100px; width: 400px; overflow: hidden; font-size: .7em">
 	      <div style="margin-left: 3px;">
-		<p><span class="control-label">Name:</span> <a href="<%= ror_api %>/organizations/<%= ror_record['id'] %>" target="_blank" style="text-decoration: none;"><%= ror_record['name'] %></a></p>
-		<p><span class="control-label">Location:</span> <%= ror_record['country']['country_name'] %></p>
+		<p><span class="control-label">Name:</span> <a href="<%= ror_api %>/organizations/<%= ror_record['id'] %>" target="_blank" style="text-decoration: none;"><%= display_name %></a></p>
+		<p><span class="control-label">Location:</span> <%= country_name %></p>
 		<p><span class="control-label">ROR ID:</span><span style="font-family:monospace;"> <%= ror_record['id'] %></span></p>
 	      </div>
 	     </div>
