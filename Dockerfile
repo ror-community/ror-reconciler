@@ -46,7 +46,8 @@ RUN mkdir -p vendor/bundle && \
     chown -R app:app . && \
     chmod -R 755 . && \
     gem install bundler:2.5.0 && \
-    /sbin/setuser app bundle install --path vendor/bundle
+    /sbin/setuser app bundle config set --local path vendor/bundle && \
+    /sbin/setuser app bundle install
 
 # install custom ssh key during startup
 RUN mkdir -p /etc/my_init.d

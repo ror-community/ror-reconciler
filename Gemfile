@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.2.6"
+ruby "~> 3.2.0"
 
 # Web framework
 gem "sinatra", "~> 4.0"
