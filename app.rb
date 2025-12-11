@@ -13,6 +13,14 @@ ENV['ROR_RECON'] ||= 'https://reconcile.ror.org'.freeze
 MAX_RESULTS = 5
 
 helpers do
+  def extract_ror_id(ror)
+    if ror.include?('ror.org/')
+      ror.split('ror.org/').last
+    else
+      ror
+    end
+  end
+
   def get_display_name(record)
     names = record['names'] || []
     display = names.find { |n| n['types']&.include?('ror_display') }
@@ -34,7 +42,8 @@ helpers do
   end
 
   def get_ror(ror)
-    uri = "#{ENV['ROR_API']}/organizations/#{URI.encode_www_form_component(ror)}"
+    ror_id = extract_ror_id(ror)
+    uri = "#{ENV['ROR_API']}/organizations/#{URI.encode_www_form_component(ror_id)}"
     res = URI.open(uri).read
     JSON.parse(res)
   end
@@ -45,8 +54,8 @@ get '/heartbeat/?', provides: %i[html json] do
   status.to_json
 end
 
-get '/preview/*.*', provides: [:html] do
-  ror = params['splat'].join('.')
+get '/preview/*', provides: [:html] do
+  ror = params['splat'].first
   ror_record = get_ror(ror)
 
   display_name = get_display_name(ror_record)
