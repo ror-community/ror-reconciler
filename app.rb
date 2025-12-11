@@ -7,12 +7,22 @@ set :bind, '0.0.0.0'
 set :protection, except: :frame_options
 
 # required ENV variables, can be set in .env file
-ENV['ROR_API'] ||= 'https://api.ror.org'.freeze
+ENV['ROR_API'] ||= 'https://api.ror.org/v2'.freeze
 ENV['ROR_RECON'] ||= 'https://reconcile.ror.org'.freeze
 
 MAX_RESULTS = 5
 
 helpers do
+  def get_display_name(record)
+    names = record['names'] || []
+    display = names.find { |n| n['types']&.include?('ror_display') }
+    display ? display['value'] : names.first&.dig('value')
+  end
+
+  def get_country_name(record)
+    record.dig('locations', 0, 'geonames_details', 'country_name')
+  end
+
   def search_ror(test_org_name)
     test_org_name = test_org_name.tr(';', '')
     test_org_name = test_org_name.tr('&', '%26')
@@ -39,7 +49,10 @@ get '/preview/*.*', provides: [:html] do
   ror = params['splat'].join('.')
   ror_record = get_ror(ror)
 
-  erb :preview, locals: { ror_api: ENV['ROR_API'], ror_record: ror_record }
+  display_name = get_display_name(ror_record)
+  country_name = get_country_name(ror_record)
+
+  erb :preview, locals: { ror_api: ENV['ROR_API'], ror_record: ror_record, display_name: display_name, country_name: country_name }
 end
 
 post '/reconcile/?', provides: %i[html json] do
@@ -57,7 +70,7 @@ post '/reconcile/?', provides: %i[html json] do
       type = { 'id' => '/ror/organization', 'name' => 'Organization' }
         hits['items'][0, MAX_RESULTS].each do |hit|
         ror = hit['id']
-        entry = { 'id' => ror, 'name' => hit['name'], 'type' => [type], 'score' => score, 'match' => 'false', 'uri' => ror }
+        entry = { 'id' => ror, 'name' => get_display_name(hit), 'type' => [type], 'score' => score, 'match' => 'false', 'uri' => ror }
         results[key]['result'].push(entry)
         score -= 1
       end
@@ -71,13 +84,16 @@ get '/flyout/?', provides: [:json] do
   ror = params['id']
   ror_record = get_ror(ror)
 
+  display_name = get_display_name(ror_record)
+  country_name = get_country_name(ror_record)
+
   html = File.open('views/flyout.erb').read
   template = ERB.new(html)
   b = binding
   b.local_variable_set(:ror_record, ror_record)
   b.local_variable_set(:ror_api, ENV['ROR_API'])
-  # template = ERB.new(html).result(b)
-  # template.result
+  b.local_variable_set(:display_name, display_name)
+  b.local_variable_set(:country_name, country_name)
   json = { 'id' => ror, 'html' => template.result(b) }.to_json
   if callback
     content_type :js
@@ -101,7 +117,7 @@ get '/suggest/?', provides: [:json] do
 
   hits['items'][0, MAX_RESULTS].each do |hit|
     ror = hit['id']
-    entry = { 'id' => ror, 'name' => hit['name'], 'score' => score, 'description' => hit['country']['country_name'] }
+    entry = { 'id' => ror, 'name' => get_display_name(hit), 'score' => score, 'description' => get_country_name(hit) }
     results.push(entry)
     score -= 1
   end
