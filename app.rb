@@ -10,9 +10,10 @@ permitted_hosts = [
   'reconcile.ror.org',
   'reconcile.staging.ror.org',
   'reconcile.dev.ror.org',
-  'example.org'
+  'example.org',
+  /localhost/,
+  /127\.0\.0\.1/
 ]
-permitted_hosts += [/localhost/, /127\.0\.0\.1/] unless ENV['RACK_ENV'] == 'production'
 
 set :host_authorization, permitted_hosts: permitted_hosts
 
