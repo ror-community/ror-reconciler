@@ -9,7 +9,8 @@ set :protection, except: :frame_options
 permitted_hosts = [
   'reconcile.ror.org',
   'reconcile.staging.ror.org',
-  'reconcile.dev.ror.org'
+  'reconcile.dev.ror.org',
+  'example.org'
 ]
 permitted_hosts += [/localhost/, /127\.0\.0\.1/] unless ENV['RACK_ENV'] == 'production'
 
