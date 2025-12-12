@@ -4,7 +4,16 @@ require 'json'
 require 'open-uri'
 
 set :bind, '0.0.0.0'
-set :protection, except: [:frame_options, :host_authorization]
+set :protection, except: :frame_options
+
+permitted_hosts = [
+  'reconcile.ror.org',
+  'reconcile.staging.ror.org',
+  'reconcile.dev.ror.org'
+]
+permitted_hosts += [/localhost/, /127\.0\.0\.1/] unless ENV['RACK_ENV'] == 'production'
+
+set :host_authorization, permitted_hosts: permitted_hosts
 
 # required ENV variables, can be set in .env file
 ENV['ROR_API'] ||= 'https://api.ror.org/v2'.freeze
