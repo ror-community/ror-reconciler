@@ -1,5 +1,4 @@
-FROM phusion/passenger-ruby32:3.0.0
-LABEL maintainer="mfenner@datacite.org"
+FROM phusion/passenger-ruby32:3.1.6
 
 # Set correct environment variables
 ENV HOME /home/app
