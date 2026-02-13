@@ -5,6 +5,7 @@ require 'open-uri'
 
 set :bind, '0.0.0.0'
 set :protection, except: [:frame_options, :host_authorization]
+set :host_authorization, { permitted_hosts: [] }
 
 # required ENV variables, can be set in .env file
 ENV['ROR_API'] ||= 'https://api.ror.org/v2'.freeze
